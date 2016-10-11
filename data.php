@@ -7,8 +7,7 @@
 	if (!isset($_SESSION["userId"])) {
 		header("Location: login.php");		
 	}
-	
-	
+		
 	
 	//kas aadressi real on logout
 	if (isset($_GET["logout"])) {
