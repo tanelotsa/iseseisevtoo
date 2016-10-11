@@ -89,15 +89,14 @@
 	
 	}
 	
-	function saveEvent($age,$color) {
-		
+	function saveShow($show,$season,$episode) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO whistle (age, color) VALUE(?,?)");
+		$stmt = $mysqli ->prepare("INSERT INTO sarjad (sari, hooaeg, osa) VALUE(?,?,?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("is", $age, $color);
+		$stmt->bind_param("sii", $show, $season, $episode);
 	
 		if($stmt->execute() ) {
 			echo "Õnnestus!","<br>";			
@@ -107,12 +106,12 @@
 	
 	}
 	
-	function getAllPeople () {
+	function getAllShows () {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("SELECT id, age, color FROM whistle");
-		$stmt->bind_result($id, $age, $color);
+		$stmt = $mysqli->prepare("SELECT id, sari, hooaeg, osa FROM sarjad");
+		$stmt->bind_result($id, $show, $season. $episode);
 		$stmt->execute ();
 		
 		$results = array();
@@ -120,13 +119,14 @@
 		//tsükli sisu tehakse niimitu korda , mitu rida sql lausega tuleb
 		while($stmt->fetch()) {
 			
-			$human = new StdClass();
-			$human->id = $id;
-			$human->age = $age;
-			$human->color = $color;
+			$tvshow = new StdClass();
+			$tvshow->id = $id;
+			$tvshow->show = $show;
+			$tvshow->season = $season;
+			$tvshow->episode = $episode;
 			
 			//echo $color."<br>";
-			array_push($results,$human);
+			array_push($results,$tvshow);
 		}
 		
 		return $results;

@@ -18,19 +18,21 @@
 		
 	}
 	
-	if ( 	 isset($_POST["age"]) &&
-			 isset($_POST["color"]) &&
-			 !empty($_POST["age"]) &&
-			 !empty($_POST["color"]) 
+	if ( 	 isset($_POST["show"]) &&
+			 isset($_POST["season"]) &&
+			 isset($_POST["episode"]) &&
+			 !empty($_POST["show"]) &&
+			 !empty($_POST["season"]) &&
+			 !empty($_POST["episode"]) 
 		
 		) {
-			saveEvent($_POST["age"],$_POST["color"]);
+			saveShow($_POST["show"],$_POST["season"],$_POST["episode"]);
 		}
 	
-		$people = getAllPeople();
+		$shows = getAllShows();
 		
 		//echo "<pre>";
-		//var_dump($people);
+		//var_dump($shows);
 		//echo "</pre>";
 		
 ?>
@@ -48,23 +50,31 @@
 
 <body>
 
-	<h1>Kes läks üle tee?</h1>
+	<h1>Mis sarja vaatasid?</h1>
 	
 	<form method="POST">
 	
-		<label>Vanus:</label> 
+		<label>Sarja nimi:</label> 
 		
 		<br>
 		
-		<input name="age" type = "number"> <//?php echo $loginEmailError ; ?>
+		<input name="show" type = "text">
 		
 		<br><br>
 		
-		<label>Foori tule värv:</label>
+		<label>Hooaeg:</label>
 		
 		<br>
 		
-		<input name="color" type = "color" > <//?php echo $loginPasswordError ; ?>
+		<input name="season" type = "number" >
+	
+		<br><br>
+		
+		<label>Episood:</label>
+		
+		<br>
+		
+		<input name="episode" type = "number" >
 	
 		<br><br>
 		
@@ -81,16 +91,18 @@
 	
 		$html .= "<tr>";
 			$html .= "<td>ID</td>";
-			$html .= "<td>Vanus</td>";
-			$html .= "<td>Värv</td>";
+			$html .= "<td>Sari</td>";
+			$html .= "<td>Hooaeg</td>";
+			$html .= "<td>Episood</td>";
 		$html .= "</tr>";
 		
-		foreach ($people as $p) {
+		foreach ($shows as $s) {
 			
 			$html .= "<tr>";
 				$html .= "<td>".$p->id."</td>";
-				$html .= "<td>".$p->age."</td>";
-				$html .= "<td>".$p->color."</td>";
+				$html .= "<td>".$p->show."</td>";
+				$html .= "<td>".$p->season."</td>";
+				$html .= "<td>".$p->episode."</td>";
 			$html .= "</tr>";
 			
 		}
@@ -100,39 +112,7 @@
 	echo $html;	
 ?>
 	
-<h3>Midagi huvitavat</h3>
-	
-<?php
 
-		foreach ($people as $p) {
-			
-			$style = "
-			
-				background-color:".$p->color.";
-				width: 40px;
-				height: 40px;
-				border-radius: 20px;
-				text-align: center;
-				line-height: 30px;
-				float: left;
-				margin: 20px;
-			";	
-				
-			echo "<p style = ' ".$style." '>".$p->age."</p>";
-		
-		}
-
-
-
-
-
-
-
-
-
-
-
-?>	
 	
 </body>	
 </html>
