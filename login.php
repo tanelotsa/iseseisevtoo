@@ -1,6 +1,5 @@
 <?php
 	
-	
 	require("functions.php");
 	
 	//kui on sisseloginud, suunan data lehele
