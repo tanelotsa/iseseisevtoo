@@ -111,7 +111,7 @@
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("SELECT id, sari, hooaeg, osa FROM sarjad");
-		$stmt->bind_result($id, $show, $season. $episode);
+		$stmt->bind_result($id, $show, $season, $episode);
 		$stmt->execute ();
 		
 		$results = array();
@@ -132,7 +132,19 @@
 		return $results;
 	}
 
-
+	function cleanInput($input) {
+		
+		//eemaldab tühikud ümbert
+		$input = trim($input);
+ 		
+		//eemaldab teistpidised kaldkriipsud \\
+		$input = stripslashes($input);
+		
+		//html asendab , nt "<" muutub "&lt;"
+		$input = htmlspecialchars($input);
+		
+		return $input;
+	}
 
 
 

@@ -1,13 +1,17 @@
 <?php
 	//ühendan sessiooniga
-	
-	require("functions.php");
+
+/** @noinspection PhpIncludeInspection */
+require("functions.php");
 	
 	//kui ei ole sisseloginud, suunan login lehele
 	if (!isset($_SESSION["userId"])) {
-		header("Location: login.php");		
+		header("Location: login.php");  //iga headeri järele tuleks lisada exit
+		exit();
 	}
 		
+	
+	
 	
 	//kas aadressi real on logout
 	if (isset($_GET["logout"])) {
@@ -15,7 +19,7 @@
 		session_destroy();
 		
 		header("Location: login.php");
-		
+		exit();
 	}
 	
 	if ( 	 isset($_POST["show"]) &&
@@ -26,7 +30,9 @@
 			 !empty($_POST["episode"]) 
 		
 		) {
-			saveShow($_POST["show"],$_POST["season"],$_POST["episode"]);
+								
+			saveShow(cleanInput($_POST["show"],$_POST["season"],$_POST["episode"]));
+			
 		}
 	
 		$shows = getAllShows();
@@ -99,10 +105,10 @@
 		foreach ($shows as $s) {
 			
 			$html .= "<tr>";
-				$html .= "<td>".$p->id."</td>";
-				$html .= "<td>".$p->show."</td>";
-				$html .= "<td>".$p->season."</td>";
-				$html .= "<td>".$p->episode."</td>";
+				$html .= "<td>".$s->id."</td>";
+				$html .= "<td>".$s->show."</td>";
+				$html .= "<td>".$s->season."</td>";
+				$html .= "<td>".$s->episode."</td>";
 			$html .= "</tr>";
 			
 		}
